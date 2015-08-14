@@ -330,7 +330,7 @@ public class Configuration {
     @ConfigurationName("gui.fontPreviewWindow.posY")
     public static final ConfigurationItem<Integer> guiFontPreviewPosY = null;
 
-    @ConfigurationDefaultInt(3)
+    @ConfigurationDefaultInt(4)
     @ConfigurationName("formatting.indent.size")
     @ConfigurationCategory("format")
     public static final ConfigurationItem<Integer> indentSize = null;

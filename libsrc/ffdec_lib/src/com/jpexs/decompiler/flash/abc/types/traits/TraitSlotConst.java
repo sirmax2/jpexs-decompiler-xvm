@@ -88,7 +88,7 @@ public class TraitSlotConst extends Trait implements TraitWithSlot {
 
         String slotconst = "var";
         if (kindType == TRAIT_CONST) {
-            slotconst = "const";
+            slotconst = "var";
         }
         if (val != null && val.isNamespace()) {
             slotconst = "namespace";

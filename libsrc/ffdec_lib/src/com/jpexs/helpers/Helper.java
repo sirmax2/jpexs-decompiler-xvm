@@ -1071,7 +1071,7 @@ public class Helper {
         }
 
         writer.appendNoHilight(" */").newLine();
-        writer.appendNoHilight("throw new flash.errors.IllegalOperationError(\"").
+        writer.appendNoHilight("throw new Error(\"").
                 appendNoHilight(AppResources.translate("decompilationError.timeout.description")).
                 appendNoHilight("\");").newLine();
     }
@@ -1086,7 +1086,7 @@ public class Helper {
         writer.appendNoHilight(" * ").appendNoHilight(AppResources.translate("decompilationError.errorType")).
                 appendNoHilight(": " + ex.getClass().getSimpleName() + " (" + ex.getMessage() + ")").newLine();
         writer.appendNoHilight(" */").newLine();
-        writer.appendNoHilight("throw new flash.errors.IllegalOperationError(\"").
+        writer.appendNoHilight("throw new Error(\"").
                 appendNoHilight(AppResources.translate("decompilationError.error.description")).
                 appendNoHilight("\");").newLine();
     }
