@@ -790,7 +790,7 @@ public class AVM2Code implements Cloneable {
         List<Long> switchAddresses = new ArrayList<>();
         int availableBytes = ais.available();
         for (int i = 0; i < availableBytes; i++) {
-            codeMap.put((long) i, new AVM2Instruction(i, new NopIns(), new int[]{}));
+            codeMap.put((long) i, new AVM2Instruction(i, new NopIns(), null));
         }
 
         long startPos = ais.getPosition();
@@ -2875,11 +2875,11 @@ public class AVM2Code implements Cloneable {
                         if (ins2.isExit()) {
                             code.set(i, new AVM2Instruction(ofs, ins2.definition, ins2.operands));
                             AVM2Instruction nopIns;
-                            nopIns = new AVM2Instruction(ofs + 1, new NopIns(), new int[]{});
+                            nopIns = new AVM2Instruction(ofs + 1, new NopIns(), null);
                             code.add(i + 1, nopIns);
-                            nopIns = new AVM2Instruction(ofs + 2, new NopIns(), new int[]{});
+                            nopIns = new AVM2Instruction(ofs + 2, new NopIns(), null);
                             code.add(i + 2, nopIns);
-                            nopIns = new AVM2Instruction(ofs + 3, new NopIns(), new int[]{});
+                            nopIns = new AVM2Instruction(ofs + 3, new NopIns(), null);
                             code.add(i + 3, nopIns);
                             i += 3;
                             csize = code.size();
@@ -3345,20 +3345,24 @@ public class AVM2Code implements Cloneable {
      }*/
 
     @Override
-    public AVM2Code clone() throws CloneNotSupportedException {
-        AVM2Code ret = (AVM2Code) super.clone();
-        if (code != null) {
-            List<AVM2Instruction> codeCopy = new ArrayList<>(code.size());
-            for (AVM2Instruction ins : code) {
-                codeCopy.add(ins.clone());
+    public AVM2Code clone() {
+        try {
+            AVM2Code ret = (AVM2Code) super.clone();
+            if (code != null) {
+                List<AVM2Instruction> codeCopy = new ArrayList<>(code.size());
+                for (AVM2Instruction ins : code) {
+                    codeCopy.add(ins.clone());
+                }
+                ret.code = codeCopy;
             }
-            ret.code = codeCopy;
-        }
 
-        cacheActual = false;
-        ignoredIns = new ArrayList<>();
-        killedRegs = new HashMap<>();
-        unknownJumps = new ArrayList<>();
-        return ret;
+            ret.cacheActual = false;
+            ret.ignoredIns = new ArrayList<>();
+            ret.killedRegs = new HashMap<>();
+            ret.unknownJumps = new ArrayList<>();
+            return ret;
+        } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException();
+        }
     }
 }

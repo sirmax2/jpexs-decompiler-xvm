@@ -144,6 +144,12 @@ public class SetPropertyIns extends InstructionDefinition implements SetTypeIns 
     }
 
     @Override
+    public int getStackPopCount(AVM2Instruction ins, ABC abc) {
+        int multinameIndex = ins.operands[0];
+        return 2 + getMultinameRequiredStackSize(abc.constants, multinameIndex);
+    }
+
+    @Override
     public String getObject(Stack<AVM2Item> stack, ABC abc, AVM2Instruction ins, List<AVM2Item> output, MethodBody body, HashMap<Integer, String> localRegNames, List<DottedChain> fullyQualifiedNames) {
         int multinameIndex = ins.operands[0];
         String multiname = resolveMultinameNoPop(0, stack, abc.constants, multinameIndex, ins, fullyQualifiedNames);
@@ -152,23 +158,5 @@ public class SetPropertyIns extends InstructionDefinition implements SetTypeIns 
             multiname = "." + multiname;
         }
         return obj + multiname;
-    }
-
-    @Override
-    public int getStackDelta(AVM2Instruction ins, ABC abc) {
-        int ret = -2;
-        int multinameIndex = ins.operands[0];
-        //Note: In official compiler, the stack can be wrong(greater) for some MULTINAMEL/A, e.g. increments
-        /*
-         var arr=[1,2,3];
-         trace(arr[2]++);
-         */
-        if (abc.constants.getMultiname(multinameIndex).needsName()) {
-            ret--;
-        }
-        if (abc.constants.getMultiname(multinameIndex).needsNs()) {
-            ret--;
-        }
-        return ret;
     }
 }

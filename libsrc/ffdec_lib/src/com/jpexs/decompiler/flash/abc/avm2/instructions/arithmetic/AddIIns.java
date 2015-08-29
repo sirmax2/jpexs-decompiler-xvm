@@ -45,7 +45,7 @@ public class AddIIns extends AddIns {
     }
 
     @Override
-    public int getStackDelta(AVM2Instruction ins, ABC abc) {
-        return -2 + 1;
+    public int getStackPopCount(AVM2Instruction ins, ABC abc) {
+        return 2;
     }
 }

@@ -2430,7 +2430,23 @@ public class ActionScript3Parser {
         parABCs.addAll(playerABCs);
         parABCs.addAll(otherABCs);
         ActionScript3Parser parser = new ActionScript3Parser(abc, parABCs);
-        parser.addScript(src, documentClass, fileName, classPos);
+        boolean success = false;
+        ABC originalAbc = ((ABCContainerTag) ((Tag) abc.parentTag).cloneTag()).getABC();
+        try {
+            parser.addScript(src, documentClass, fileName, classPos);
+            success = true;
+        } finally {
+            if (!success) {
+                // restore original constant pool and other lists
+                abc.constants = originalAbc.constants;
+                abc.method_info = originalAbc.method_info;
+                abc.metadata_info = originalAbc.metadata_info;
+                abc.instance_info = originalAbc.instance_info;
+                abc.class_info = originalAbc.class_info;
+                abc.script_info = originalAbc.script_info;
+                abc.bodies = originalAbc.bodies;
+            }
+        }
     }
 
     public static void compile(SWF swf, String src, String dst, int classPos) {
