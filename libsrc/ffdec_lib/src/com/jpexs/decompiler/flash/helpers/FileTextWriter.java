@@ -112,9 +112,12 @@ public class FileTextWriter extends GraphTextWriter implements AutoCloseable {
     }
 
     private void writeToFile(String str) {
+        if (str.isEmpty())
+          return;
         if (newLine) {
             newLine = false;
-            appendIndent();
+            if (str != formatting.newLineChars)
+                appendIndent();
         }
         try {
             writer.write(str);
