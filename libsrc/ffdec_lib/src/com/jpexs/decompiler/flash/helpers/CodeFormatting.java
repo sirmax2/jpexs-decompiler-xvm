@@ -26,7 +26,7 @@ public class CodeFormatting {
 
     public String indentString = "    ";
 
-    public boolean beginBlockOnNewLine = false;
+    public boolean beginBlockOnNewLine = true;
 
     // spaces
     // before parentheses
