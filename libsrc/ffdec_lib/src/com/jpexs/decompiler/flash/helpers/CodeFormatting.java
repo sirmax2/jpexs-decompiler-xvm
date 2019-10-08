@@ -22,7 +22,7 @@ package com.jpexs.decompiler.flash.helpers;
  */
 public class CodeFormatting {
 
-    public String newLineChars = "\r\n";
+    public String newLineChars = "\n";
 
     public String indentString = "    ";
 
